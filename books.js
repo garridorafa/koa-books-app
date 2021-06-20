@@ -12,7 +12,13 @@ let books = [
 ];
 
 router.get("/", (ctx, next) => {
-  ctx.body = books;
+  ctx.body = {
+    status: "success",
+    results: books.length,
+    data: {
+      books,
+    },
+  };
   next();
 });
 
@@ -22,10 +28,19 @@ router.get("/:id", (ctx, next) => {
   });
 
   if (getCurrentBook.length) {
-    ctx.body = getCurrentBook[0];
+    ctx.response.status = 200;
+    ctx.body = {
+      status: "success",
+      data: {
+        book: getCurrentBook[0],
+      },
+    };
   } else {
     ctx.response.status = 404;
-    ctx.body = "Book Not Found";
+    ctx.body = {
+      status: "fail",
+      message: "Book Not Found",
+    };
   }
   next();
 });
@@ -37,16 +52,24 @@ router.post("/", (ctx, next) => {
     !ctx.request.body.author
   ) {
     ctx.response.status = 400;
-    ctx.body = "Please enter the complete data";
+    ctx.body = {
+      status: "fail",
+      message: "Please enter the complete data",
+    };
   } else {
-    // const [id, name, author] = ctx.request.body;
-    let newBook = books.push({
+    let newBook = {
       id: ctx.request.body.id,
       name: ctx.request.body.name,
       author: ctx.request.body.author,
-    });
+    };
+    books.push(newBook);
     ctx.status = 201;
-    ctx.body = `New book create with name ${ctx.request.body.name}`;
+    ctx.body = {
+      status: "success",
+      data: {
+        newBook,
+      },
+    };
   }
   next();
 });
