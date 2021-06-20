@@ -16,4 +16,18 @@ router.get("/", (ctx, next) => {
   next();
 });
 
+router.get("/:id", (ctx, next) => {
+  let getCurrentBook = books.filter((book) => {
+    if (book.id == ctx.params.id) return true;
+  });
+
+  if (getCurrentBook.length) {
+    ctx.body = getCurrentBook[0];
+  } else {
+    ctx.response.status = 404;
+    ctx.body = "Book Not Found";
+  }
+  next();
+});
+
 module.exports = router;
