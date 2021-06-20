@@ -1,0 +1,17 @@
+{
+  "name": "koa-books-app",
+  "version": "0.0.1",
+  "description": "koa favorite books app",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Rafa Garrido",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.13.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
