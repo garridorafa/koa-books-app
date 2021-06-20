@@ -30,4 +30,25 @@ router.get("/:id", (ctx, next) => {
   next();
 });
 
+router.post("/", (ctx, next) => {
+  if (
+    !ctx.request.body.id ||
+    !ctx.request.body.name ||
+    !ctx.request.body.author
+  ) {
+    ctx.response.status = 400;
+    ctx.body = "Please enter the complete data";
+  } else {
+    // const [id, name, author] = ctx.request.body;
+    let newBook = books.push({
+      id: ctx.request.body.id,
+      name: ctx.request.body.name,
+      author: ctx.request.body.author,
+    });
+    ctx.status = 201;
+    ctx.body = `New book create with name ${ctx.request.body.name}`;
+  }
+  next();
+});
+
 module.exports = router;
