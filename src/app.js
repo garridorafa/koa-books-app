@@ -7,10 +7,14 @@ const books = require("./books");
 const app = new Koa();
 
 //Middlerwares
+app.use(async (ctx, next) => {
+  await next();
+  console.log(`${ctx.method} ${ctx.url} - ${ctx.status}`);
+});
+
 app.use(koaBody());
 
 //Routes
 app.use(books.routes());
 
-//Bootstraping app
-app.listen(3000);
+module.exports = app;
